@@ -1,16 +1,58 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
+    <title>Clipboard Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    <h2>Enter the OTP sent to your phone</h2>
-    
-    <form action="/verify-otp" method="POST">
-        <label for="otp_field">One-Time Password (OTP):</label>
-        <input id="otp_field" type="text" name="otp" inputmode="numeric" pattern="[0-9]{6}" autocomplete="one-time-code" required>
-        <button type="submit">Verify</button>
-    </form>
+
+    <h2>Clipboard Example</h2>
+
+    <!-- Input field with value to copy -->
+    <input type="text" id="inputField" value="Copy this text">
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <!-- Button to read clipboard content -->
+    <button onclick="readFromClipboard()">Read from Clipboard</button>
+
+    <!-- Display read value -->
+    <div id="output"></div>
+
+    <script>
+        // Function to copy input value to clipboard using navigator.clipboard.writeText()
+        function copyToClipboard() {
+            const textToCopy = document.getElementById("inputField").value;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Copied to clipboard: " + textToCopy);
+            }).catch(err => {
+                console.error("Failed to copy text: ", err);
+            });
+        }
+
+        // Function to read clipboard content and show in the UI
+        async function readFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById("output").innerText = "Clipboard content: " + text;
+            } catch (err) {
+                console.error("Failed to read clipboard: ", err);
+            }
+        }
+    </script>
+
 </body>
 </html>
